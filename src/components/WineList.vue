@@ -70,53 +70,45 @@
 
 <style scoped>
 
-  #app {
+  .background {
 
+    position: absolute;
+    box-sizing: border-box;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
     display: flex;
+    align-items: stretch;
+    justify-content: center;
+
+
+  }
+
+  main {
+
     flex-grow: 1;
+    display: flex;
     flex-direction: column;
+    gap: 1em;
+    align-items: center;
+    margin-top: var(--pad-n);
+    margin-bottom: var(--pad-s);
+    margin-left: var(--pad-w);
+    margin-right: var(--pad-e);
     position: relative;
 
-    .background {
+    > div {
 
-      position: absolute;
-      box-sizing: border-box;
-      z-index: -1;
-      width: 100%;
-      height: 100%;
-      top: 0px;
-      left: 0px;
-      display: flex;
-      align-items: stretch;
-      justify-content: center;
-
-
-    }
-
-    > main {
-
-      flex-grow: 1;
       display: flex;
       flex-direction: column;
-      gap: 1em;
-      align-items: center;
-      margin-top: var(--pad-n);
-      margin-bottom: var(--pad-s);
-      margin-left: var(--pad-w);
-      margin-right: var(--pad-e);
-      position: relative;
+      justify-content: center;
+      flex-grow: 1;
 
-      > div {
-
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        flex-grow: 1;
-
-        > h1 {
-          font-size: var(--heading-font-size);
-          text-align: center;
-        }
+      > h1 {
+        font-size: var(--heading-font-size);
+        text-align: center;
       }
     }
   }

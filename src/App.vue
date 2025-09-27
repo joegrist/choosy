@@ -15,4 +15,3 @@ defineComponent({
 <template>
   <WineList />
 </template>
-
