@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/globals.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+
+      function getPWADisplayMode() {
+        if (document.referrer.startsWith('android-app://'))
+          return 'twa';
+        if (window.matchMedia('(display-mode: browser)').matches)
+          return 'browser';
+        if (window.matchMedia('(display-mode: standalone)').matches)
+          return 'standalone';
+        if (window.matchMedia('(display-mode: minimal-ui)').matches)
+          return 'minimal-ui';
+        if (window.matchMedia('(display-mode: fullscreen)').matches)
+          return 'fullscreen';
+        if (window.matchMedia('(display-mode: window-controls-overlay)').matches)
+          return 'window-controls-overlay';
+
+        return 'unknown';
+      }
+
+      window.addEventListener('DOMContentLoaded', () => {
+        const mode = getPWADisplayMode();
+        console.log('Display mode: ' + mode)
+        const isInstalled = mode == 'standalone';
+        document.body.classList.toggle('installed', isInstalled)
+        document.body.classList.toggle('browser', !isInstalled)
+      });
+      
+     </script>
+    <title>Choosy</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,271 @@
+:root {
+	--page-width: 1100px;
+	--edge-padding: clamp(2rem, 1.2941rem + 3.5294vw, 3.5rem);
+	--primary: #653E52;
+	--primary-light: #8b6378;
+	--primary-dark: #3a1a2b;
+	--secondary: #E3D28B;
+	--secondary-light: #eee4bd;
+	--secondary-translucent: #eee4bd33;
+	--background: var(--primary);
+	--text: var(--secondary);
+	--font-body-size: 1em;
+	--heading-font-size: clamp(2em, calc(2rem + ((1vw - 0.15em) * 1.8605)), 3em);
+	--button-font-size: clamp(1rem, 0.8118rem + 0.9412vw, 1.4rem);
+	--heading-font: sans-serif;
+	--body-font: sans-serif;
+	--pad-n: calc(var(--edge-padding) + env(safe-area-inset-top));
+	--pad-s: calc(var(--edge-padding) + env(safe-area-inset-bottom));
+	--pad-w: calc(var(--edge-padding) + env(safe-area-inset-left));
+	--pad-e: calc(var(--edge-padding) + env(safe-area-inset-right));
+	--duration: 0.2s;
+}
+
+html {
+	display: flex;
+	justify-content: stretch;
+	height: 100%;
+	align-items: stretch;
+	flex-direction: column;
+}
+
+body {
+	margin: 0px;
+	background: var(--background);
+	color: var(--text);
+	font-size: var(--font-body-size);
+	font-family: var(--body-font);
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+h1, h2, h3 {
+	margin: 0px;
+	font-family: var(--heading-font);
+	font-weight: 200;
+}
+
+button {
+	border-width: 0px;
+	border-radius: 2em;
+	padding: 0.5em 2em;
+	cursor: pointer;
+	font-size: var(--button-font-size);
+	background-color: var(--secondary);
+	color: var(--primary-dark);
+	width: 100%;
+
+	&:active {
+		background-color: var(--secondary-light);
+	}
+
+	&:disabled {
+		background-color: var(--secondary-translucent);
+	}
+}
+
+#app {
+
+	display: flex;
+	flex-grow: 1;
+	flex-direction: column;
+	position: relative;
+
+	.background {
+
+		position: absolute;
+		box-sizing: border-box;
+		z-index: -1;
+		width: 100%;
+		height: 100%;
+		top: 0px;
+		left: 0px;
+		display: flex;
+		align-items: stretch;
+		justify-content: center;
+
+		svg path {
+			fill: none;
+			stroke-width: 4px;
+			stroke: var(--primary-dark);
+		}
+	}
+
+	> main {
+
+		flex-grow: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 1em;
+		align-items: center;
+		margin-top: var(--pad-n);
+		margin-bottom: var(--pad-s);
+		margin-left: var(--pad-w);
+		margin-right: var(--pad-e);
+		position: relative;
+
+		> div {
+
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			flex-grow: 1;
+
+			> h1 {
+				font-size: var(--heading-font-size);
+				text-align: center;
+			}
+		}
+
+		#install-prompt {
+
+			--color: var(--primary-light);
+			--color-dark: var(--primary-dark);
+
+			display: flex;
+			color: var(--color);
+			flex-direction: row;
+			gap: 1em;
+			position: absolute;
+			top: 0px;
+			right: 0px;
+			background-color: var(--color-dark);
+			padding: 0.25em;
+			border-radius: 10em;
+			align-items: center;
+			visibility: visible;
+			transition-property: opacity, transform, visibility;
+			transition-duration: var(--duration), var(--duration), 0s;
+			transition-timing-function: ease-out;
+
+			> div {
+
+				display: flex;
+				flex-direction: row;
+				gap: 1em;
+				cursor: pointer;
+
+				svg.icon-download {
+
+					width: 20px;
+					height: 20px;
+
+					circle {
+						fill: var(--color);
+					}
+
+					line, path {
+						fill: none;
+						stroke: var(--color-dark);
+						stroke-width: 1.4px;
+					}
+				}
+			}
+
+			svg.icon-close {
+
+				width: 20px;
+				height: 20px;
+				transform: translateX(-5px);
+				cursor: pointer;
+
+				line {
+					stroke: var(--color);
+					stroke-width: 1.2px;
+				}
+			}
+		}
+	}
+}
+
+body.installed, body.install-prompt-dismissed {
+	#install-prompt {
+		opacity: 0;
+		transform: translateY(-10px);
+		visibility: hidden;
+	}
+}
+
+.modal {
+
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	opacity: 0;
+	visibility: hidden;
+	transform-origin: 0% 100%;
+	transform: rotate(-45deg) scale(80%);
+	transition-duration: var(--duration), var(--duration), 0s;
+	transition-property: transform, opacity, visibility;
+	transition-timing-function: ease-in;
+
+	> div {
+		padding: var(--edge-padding);
+		flex-grow: 1;
+		display: flex;
+		flex-direction: column;
+		background-color: white;
+		border-radius: 10px;
+		visibility: visible;
+		gap: 1em;
+
+		header {
+
+			display: flex;
+			align-items: center;
+
+			h1 {
+				flex-grow: 1;
+			}
+
+			svg {
+
+				width: 40px;
+				height: 40px;
+				cursor: pointer;
+				transform: translateX(10px);
+
+				path {
+					fill: none;
+					stroke: var(--primary);
+					stroke-width: 1px;
+				}
+			}
+		}
+
+		> main {
+			display: flex;
+			flex-direction: column;
+			flex-grow: 1;
+
+			.card {
+				border: solid 1px var(--primary-dark);
+				border-radius: 10px;
+				padding: 1em;
+				margin-bottom: 1em;
+
+				h2 {
+					display: flex;
+					align-items: center;
+					gap: 0.5em;
+				}
+			}
+		}
+	}
+}
+
+body.dialog .modal {
+
+	opacity: 1;
+	transform: none;
+	visibility: visible;
+	color: var(--primary);
+	transition-timing-function: ease-in;
+
+}
+
