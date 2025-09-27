@@ -6,14 +6,14 @@
       class="border"
       cx="10"
       cy="10"
-      r="9.5"
+      r="9"
     />
 
     <circle
       class="dot"
       cx="10"
       cy="6"
-      r="1.5"
+      r="1.2"
     />
 
     <line
@@ -33,8 +33,8 @@
     height: 20px;
 
     circle.border, line {
-      fill: none;
-      stroke-width: 1px;
+      fill: white;
+      stroke-width: 2px;
       stroke: var(--primary);
     }
 

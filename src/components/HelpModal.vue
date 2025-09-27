@@ -12,14 +12,8 @@
       </header>
 
       <main>
-        <div class="card">
-          <h2><InfoIcon />Apple</h2>
-          <p>Click the &ldquo;Share&rdquo; button, and then &ldquo;Add To Home Screen&rdquo;.</p>
-        </div>
-        <div class="card">
-          <h2><InfoIcon />Google</h2>
-          <p>Click the &ldquo;Share&rdquo; button, and then &ldquo;Add To Home Screen&rdquo;.</p>
-        </div>
+        <InfoCard title="Apple / Safari">Use the &ldquo;Share&rdquo; button, and then select &ldquo;Add To Home Screen&rdquo;.</InfoCard>
+        <InfoCard title="Google / Chrome">Use the ellipsis(&hellip;) button, then select &ldquo;Add To Home Screen&rdquo;.</InfoCard>
       </main>
     </div>
   </div>
@@ -27,7 +21,7 @@
 
 <script setup lang="ts">
 
-  import InfoIcon from './InfoIcon.vue'
+  import InfoCard from './InfoCard.vue'
 
   const emit = defineEmits(['onClose'])
 
@@ -51,10 +45,14 @@
     opacity: 0;
     visibility: hidden;
     transform-origin: 0% 100%;
-    transform: rotate(-45deg) scale(80%);
-    transition-duration: var(--duration), var(--duration), 0s;
+    transform: rotate(-20deg) scale(80%) translateY(-100px);
+    transition-duration: var(--widget-transition-duration);
     transition-property: transform, opacity, visibility;
-    transition-timing-function: ease-in;
+    transition-timing-function: var(--timing-end-slow) var(--timing-end-fast) linear;
+
+    h1 {
+      font-weight: 400;
+    }
 
     > div {
       padding: var(--edge-padding);
@@ -94,19 +92,6 @@
         display: flex;
         flex-direction: column;
         flex-grow: 1;
-
-        .card {
-          border: solid 1px var(--primary-dark);
-          border-radius: 10px;
-          padding: 1em;
-          margin-bottom: 1em;
-
-          h2 {
-            display: flex;
-            align-items: center;
-            gap: 0.5em;
-          }
-        }
       }
     }
   }
@@ -116,13 +101,12 @@
 <style>
 
   body.dialog .modal {
-
     opacity: 1;
     transform: none;
     visibility: visible;
     color: var(--primary);
-    transition-timing-function: ease-in;
-
+    transition-timing-function: var(--timing-bounce);
+    transition-duration: var(--modal-transition-duration);
   }
 
 </style>

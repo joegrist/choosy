@@ -1,24 +1,25 @@
 <template>
   <main>
+    <InstallPrompt />
     <div class="background">
       <BottleGraphic />
     </div>
     <div>
       <h1>
-        <span v-if="choice.text.length > 0">
+        <span>
           {{ choice.text }}
         </span>
-        <span v-if="status != Conf.strings.ok">
-          {{ status }}
-        </span>
       </h1>
-      <InstallPrompt />
+      <div v-if="error.length > 0">
+        {{ error }}
+      </div>
     </div>
     <button
       :disabled="disabled"
       @click="choose"
     >
-      {{ label }}
+      <span v-if="!disabled">{{ label }}</span>
+      <BusyGraphic v-if="disabled"/>
     </button>
   </main>
 </template>
@@ -33,6 +34,7 @@
   import { Logger } from '@/lib/logger'
   import BottleGraphic from './BottleGraphic.vue'
   import InstallPrompt from './InstallPrompt.vue'
+  import BusyGraphic from './BusyGraphic.vue'
 
   const logger = new Logger()
   let choices = new Choices(logger)
@@ -40,14 +42,21 @@
   const choice = ref<Choice>(blankChoice)
   let animation: Animation
   const disabled = ref<boolean>(true)
-  const status = ref<string>(Conf.strings.loading)
+  const error = ref<string>('')
   const label = ref<string>(Conf.strings.busy)
 
   async function startup() {
-    choices = await Choices.fetch(logger)
+
+    try {
+      choices = await Choices.fetch(logger)
+    } catch (e) {
+      error.value = (e as Error).message ?? e;
+      console.log(e)
+    }
+
     logger.log(`${choices.choices.length} choices loaded to page state`)
     animation = new Animation(choices, choice, logger)
-    status.value = Conf.strings.ready
+    choice.value = choices.mock(Conf.strings.ready)
     label.value = Conf.labels[0]
     disabled.value = false
   }
@@ -58,8 +67,6 @@
 
   async function choose() {
     disabled.value = true
-    status.value = Conf.strings.ok
-    label.value = Conf.strings.busy
     await animation.animate()
     logger.log("Animation Done")
     label.value = labels.choose()
@@ -71,7 +78,6 @@
 <style scoped>
 
   .background {
-
     position: absolute;
     box-sizing: border-box;
     z-index: -1;
@@ -82,8 +88,6 @@
     display: flex;
     align-items: stretch;
     justify-content: center;
-
-
   }
 
   main {
@@ -99,16 +103,38 @@
     margin-right: var(--pad-e);
     position: relative;
 
+    button {
+      border-width: 0px;
+      border-radius: 2em;
+      padding: 0.5em 2em;
+      cursor: pointer;
+      font-size: var(--button-font-size);
+      background-color: var(--secondary);
+      color: var(--primary-dark);
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:active {
+        background-color: var(--secondary-light);
+      }
+
+      &:disabled {
+        background-color: var(--secondary-translucent);
+      }
+    }
+
     > div {
 
       display: flex;
       flex-direction: column;
       justify-content: center;
       flex-grow: 1;
+      text-align: center;
 
       > h1 {
         font-size: var(--heading-font-size);
-        text-align: center;
       }
     }
   }

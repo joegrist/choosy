@@ -18,7 +18,11 @@
 	--pad-s: calc(var(--edge-padding) + env(safe-area-inset-bottom));
 	--pad-w: calc(var(--edge-padding) + env(safe-area-inset-left));
 	--pad-e: calc(var(--edge-padding) + env(safe-area-inset-right));
-	--duration: 0.2s;
+  --modal-transition-duration: 0.5s;
+  --widget-transition-duration: 0.2s;
+  --timing-end-slow: cubic-bezier(.01,-0.02,.31,.98);
+  --timing-end-fast: cubic-bezier(.01,.61,0,.99);
+  --timing-bounce: cubic-bezier(.77,.52,.38,1.31)
 }
 
 html {
@@ -43,7 +47,7 @@ body {
 h1, h2, h3 {
 	margin: 0px;
 	font-family: var(--heading-font);
-	font-weight: 200;
+	font-weight: 300;
 }
 
 button {

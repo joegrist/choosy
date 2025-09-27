@@ -5,19 +5,20 @@
         class="icon-download"
         viewBox="0 0 20 20"
       >
-        <circle
-          cx="10"
-          cy="10"
-          r="10"
-        />
         <line
           x1="10"
           x2="10"
-          y1="5"
+          y1="2"
+          y2="12"
+        />
+        <line
+          x1="5"
+          x2="15"
+          y1="15"
           y2="15"
         />
         <path
-          d="M 5,10 L 10,15 15,10"
+          d="M 5,7 L 10,12 15,7"
         />
       </svg>
       <div>Install as an app</div>
@@ -82,14 +83,13 @@
     align-items: center;
     visibility: visible;
     transition-property: opacity, transform, visibility;
-    transition-duration: var(--duration), var(--duration), 0s;
+    transition-duration: var(--widget-transition-duration), var(--widget-transition-duration), var(--widget-transition-duration);
     transition-timing-function: ease-out;
 
     > div {
 
       display: flex;
       flex-direction: row;
-      gap: 1em;
       cursor: pointer;
 
       svg.icon-download {
@@ -97,13 +97,9 @@
         width: 20px;
         height: 20px;
 
-        circle {
-          fill: var(--color);
-        }
-
         line, path {
           fill: none;
-          stroke: var(--color-dark);
+          stroke: var(--color);
           stroke-width: 1.4px;
         }
       }
@@ -115,6 +111,7 @@
       height: 20px;
       transform: translateX(-5px);
       cursor: pointer;
+      transition-duration: var(--widget-transition-duration), var(--widget-transition-duration), 0s;
 
       line {
         stroke: var(--color);

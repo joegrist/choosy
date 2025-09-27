@@ -40,6 +40,12 @@ export class Choices {
 	choose() {
 		return this.choices[this.random]
 	}
+
+  mock(message: string): Choice {
+    return {
+      text: message
+    }
+  }
 }
 
 export class Labels {
